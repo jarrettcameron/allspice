@@ -4,27 +4,44 @@ namespace allspice.Controllers;
 [Route("[controller]")]
 public class AccountController : ControllerBase
 {
-  private readonly AccountService _accountService;
-  private readonly Auth0Provider _auth0Provider;
+    private readonly AccountService _accountService;
+    private readonly FavoritesService _favoritesService;
+    private readonly Auth0Provider _auth0Provider;
 
-  public AccountController(AccountService accountService, Auth0Provider auth0Provider)
-  {
-    _accountService = accountService;
-    _auth0Provider = auth0Provider;
-  }
+    public AccountController(AccountService accountService, FavoritesService favoritesService, Auth0Provider auth0Provider)
+    {
+        _accountService = accountService;
+        _auth0Provider = auth0Provider;
+        _favoritesService = favoritesService;
+    }
 
-  [HttpGet]
-  [Authorize]
-  public async Task<ActionResult<Account>> Get()
-  {
-    try
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<Account>> Get()
     {
-      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      return Ok(_accountService.GetOrCreateProfile(userInfo));
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            return Ok(_accountService.GetOrCreateProfile(userInfo));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-    catch (Exception e)
+
+    [Authorize]
+    [HttpGet("favorites")]
+    public async Task<ActionResult<List<FavoriteView>>> GetFavoritesOnAccount()
     {
-      return BadRequest(e.Message);
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            return Ok(_favoritesService.GetFavoritesOnAccount(userInfo));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
-  }
 }

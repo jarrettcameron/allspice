@@ -43,5 +43,8 @@ CREATE TABLE favorite (
     recipeId INT NOT NULL,
     accountId VARCHAR(255) NOT NULL,
     FOREIGN KEY (recipeId) REFERENCES recipe (id) ON DELETE CASCADE,
-    FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE
+    FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE,
+    UNIQUE (accountId, recipeId)
 );
+
+DROP TABLE favorite;
