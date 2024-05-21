@@ -3,21 +3,35 @@
 @import "./loaders.scss";
 
 body {
-  overscroll-behavior: none;
+    overscroll-behavior: none;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.pfp {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 100vw;
+}
+
+.poet {
+    font-family: 'Poetsen One', sans-serif;
 }
 
 #app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--bs-page);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bs-page);
 }
 
 main {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
-

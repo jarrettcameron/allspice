@@ -12,9 +12,7 @@ import Navbar from './components/Navbar.vue'
   <main>
     <router-view />
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
+  <RecipeModal/>
 </template>
 
 <style lang="scss">
